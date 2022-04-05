@@ -1,0 +1,43 @@
+{
+  "name": "tp2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "test:unit": "vue-cli-service test:unit",
+    "lint": "vue-cli-service lint",
+    "backend": "copy-files-from-to && json-server --watch ./backend/db.json --port 8888 ",
+    "dev": "concurrently --raw \"pnpm run backend\" \"pnpm run serve\""
+  },
+  "dependencies": {
+    "axios": "^0.26.1",
+    "bootstrap-vue": "^2.21.2",
+    "core-js": "^3.6.5",
+    "vue": "^2.6.11",
+    "vue-router": "^3.2.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.15",
+    "@vue/cli-plugin-eslint": "~4.5.15",
+    "@vue/cli-plugin-router": "~4.5.15",
+    "@vue/cli-plugin-unit-jest": "~4.5.15",
+    "@vue/cli-service": "~4.5.15",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/test-utils": "^1.0.3",
+    "axios-mock-adapter": "^1.20.0",
+    "babel-eslint": "^10.1.0",
+    "concurrently": "^7.0.0",
+    "copy-files-from-to": "^3.2.2",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "flush-promises": "^1.0.2",
+    "jest-when": "^3.5.1",
+    "json-server": "^0.17.0",
+    "vue-template-compiler": "^2.6.11"
+  }
+}

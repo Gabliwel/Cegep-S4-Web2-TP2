@@ -1,0 +1,26 @@
+// Extension VSCode pour exécuter les requêtes :https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+@rest_api_url = http://localhost:8888
+
+### Accès au tableau de pointage 
+Get {{rest_api_url}}/ranking
+
+
+### Ajouter un joueur au pointage 
+Post http://localhost:8888/ranking
+content-type: application/json
+
+{
+    "name": "Murielle Ellemure",
+    "credit": 600
+}
+
+### Voir tous les vaisseaux
+Get {{rest_api_url}}/ships
+
+### Accès au premier personnage
+Get {{rest_api_url}}/characters?_page=1&_limit=1
+// Pour savoir combien il y a de personnages, simplement demander le premier et prendre
+// ensuite la valeur de la propriété X-Total-Count dans l'entête de la réponse.
+
+### Accès au deuxième personnage 
+Get {{rest_api_url}}/characters?_page=2&_limit=1

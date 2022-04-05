@@ -1,0 +1,17 @@
+{
+  "editor.formatOnSave": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+  },
+  "standard.enable": false,
+  "jestrunner.jestPath": "node_modules/jest/bin/jest.js",
+  "jestrunner.debugOptions": {
+    "env": {
+      "VUE_APP_API": "/api/dev"
+    }
+  },
+  "jest.jestCommandLine": "pnpm run test:unit --"
+}
