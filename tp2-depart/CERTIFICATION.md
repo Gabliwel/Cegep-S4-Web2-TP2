@@ -4,8 +4,8 @@
 
 Nous, les membres de l’équipe, certifions que :
 
-- [nom coéquipier1] a contribué au travail pratique dans une proportion de [pourcentage].
-- [nom coéquipier2] a contribué au travail pratique dans une proportion de [pourcentage].
+- [Samuel Desbiens] a contribué au travail pratique dans une proportion de [pourcentage].
+- [Gabriel Bertrand] a contribué au travail pratique dans une proportion de [pourcentage].
 
 ## Bonus développé
 
