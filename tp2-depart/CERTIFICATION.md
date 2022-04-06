@@ -4,8 +4,8 @@
 
 Nous, les membres de l’équipe, certifions que :
 
-- [Samuel Desbiens] a contribué au travail pratique dans une proportion de [pourcentage].
-- [Gabriel Bertrand] a contribué au travail pratique dans une proportion de [pourcentage].
+- Samuel Desbiens a contribué au travail pratique dans une proportion de 50%.
+- Gabriel Bertrand a contribué au travail pratique dans une proportion de 50%.
 
 ## Bonus développé
 
@@ -14,7 +14,7 @@ Nous, les membres de l’équipe, certifions que :
 Ci-dessous des exemples de pourcentage à utiliser comme contribution au travail pratique.
 
 | Situation                                                             | Coéquipier **Foo** | Coéquipier **Bar** |
-|-----------------------------------------------------------------------|--------------------|--------------------|
+| --------------------------------------------------------------------- | ------------------ | ------------------ |
 | **Foo** n'a rien fait. **Bar** a fait tout le travail.                | 0%                 | 100%               |
 | **Foo** a contribué très peu. **Bar** a fait presque tout le travail. | 10%                | 90%                |
 | **Foo** a contribué un peu et **Bar** a en fait beaucoup plus.        | 20%                | 80%                |
