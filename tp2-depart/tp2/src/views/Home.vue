@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
     <div class="col d-flex justify-content-center">
       <div class="card w-75">
         <div class="card-header">
