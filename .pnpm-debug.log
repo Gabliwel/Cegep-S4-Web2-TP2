@@ -1,0 +1,14 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 1
+  },
+  "1 error pnpm": {
+    "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+    "err": {
+      "name": "pnpm",
+      "message": "No package.json (or package.yaml, or package.json5) was found in \"D:\\session4\\web\\tp2_git\\AppWebTp2\".",
+      "code": "ERR_PNPM_NO_IMPORTER_MANIFEST_FOUND",
+      "stack": "pnpm: No package.json (or package.yaml, or package.json5) was found in \"D:\\session4\\web\\tp2_git\\AppWebTp2\".\n    at readProjectManifest (C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:19818:13)\n    at async Object.readProjectManifestOnly (C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:19822:28)\n    at async readProjectManifestOnly (C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:43721:24)\n    at async Object.handler (C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:177894:24)\n    at async C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:182170:21\n    at async run (C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:182144:34)\n    at async runPnpm (C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:182363:5)\n    at async C:\\Users\\gabri\\AppData\\Roaming\\npm\\node_modules\\pnpm\\dist\\pnpm.cjs:182355:7"
+    }
+  }
+}
