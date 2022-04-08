@@ -1,9 +1,22 @@
 <template>
   <div class="content-container">
     <h1>ScoreBoard</h1>
-    <ul>
-      <li v-for="score in scores" v-bind:key="score.id">{{score.name}} - {{score.score}}</li>
-    </ul>
+    <table class="table table-striped table-dark col-md-6 offset-md-3">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Player name</th>
+          <th scope="col">Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="score in scores" v-bind:key="score.id">
+          <th scope="row">{{score.id}}</th>
+          <td>{{score.name}}</td>
+          <td>{{score.score}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
