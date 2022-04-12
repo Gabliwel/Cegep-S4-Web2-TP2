@@ -27,9 +27,17 @@ describe('Home.vue', () => {
     shipsService.getShips.mockImplementation(() => {
       throw new Error();
     })
-    const wrapper = shallowMount(Home)
+    const makeToast = jest.fn()
+    const mock = {$bvToast: {
+      toast: () => makeToast()
+    }}
+    const wrapper = shallowMount(Home, {
+      mocks: mock
+    })
     await flushPromises()
-    expect(wrapper.find('input').attributes().disabled).toBe('true');
+    expect(wrapper.find('input').attributes().disabled).toBe('disabled')
+    expect(wrapper.find('select').attributes().disabled).toBe('disabled')
+    expect(wrapper.find('button').attributes().disabled).toBe('disabled')
   })
   test('Par défaut, si il y a une erreur serveur, affiche une notification', async () => {
     shipsService.getShips.mockImplementation(() => {

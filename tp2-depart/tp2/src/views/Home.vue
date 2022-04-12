@@ -24,7 +24,7 @@
               <option v-for="ship in ships" v-bind:key="ship.id">{{ ship.name }}</option>
             </select>
           </div>
-          <button @click="changePage()" type="button" class="btn btn-primary" :class="{ disabled: hasError }">Play</button>
+          <button @click="changePage()" type="button" class="btn btn-primary" v-bind:disabled="hasError">Play</button>
         </div>
       </div>
     </div>
