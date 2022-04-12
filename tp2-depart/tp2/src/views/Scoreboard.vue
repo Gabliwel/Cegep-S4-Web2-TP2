@@ -39,7 +39,6 @@ export default {
   },
   methods: {
     makeToast (msg, title) {
-      console.log(msg)
       this.$bvToast.toast(msg, {
         title: title,
         autoHideDelay: 5000,
