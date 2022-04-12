@@ -34,14 +34,14 @@ réparer le vaisseau</pre></button>
         <div class="col">
           <div class="card">
             <div class="card-header">
-            [Nom Joueur Here]
+            Nom: {{name}}
             </div>
             <div class="card-body">
               <div class="bg-light d-flex justify-content-between">
                 <div>[Experience Joueur Here]</div>
                 <div>[Credit Galactique Here]</div>
               </div>
-                [Nom Vaisseau Here]
+                Vaisseau: {{ship}}
               <div class="progress position-relative">
                 <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
                   <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
@@ -75,6 +75,16 @@ réparer le vaisseau</pre></button>
 
 <script>
 export default {
+  mounted () {
+    this.name = this.$route.params.name
+    this.ship = this.$route.params.ship
+  },
+  data () {
+    return {
+      name: '',
+      ship: ''
+    }
+  },
   async beforeRouteLeave (to, from, next) {
     const confirmed = await this.$bvModal.msgBoxConfirm(
       'Confirmer le changement de page ? Vos données seront perdue.',
