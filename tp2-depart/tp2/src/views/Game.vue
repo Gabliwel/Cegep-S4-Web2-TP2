@@ -1,62 +1,70 @@
 <template>
   <div class="content-container">
      <h1>Game</h1>
-    <div class="float-left">
-      <div class="card w-100">
-        <div class="card-header">
-         Action
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col text-center">
-                <button style="max-height:65%;" class="btn btn-primary">Combattre</button>
-                <button style="max-height:65%;" class="btn btn-primary ml-3">Terminer</button>
-                <button style="max-height:65%;" class="btn btn-primary btn-sm ml-3"><pre class="text-white"> Terminer la mission et
+      <div class="row mt-5 px-4">
+        <div class="col-7">
+          <div class="card h-100">
+            <div class="card-header">
+              Action
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col text-center">
+                  <button style="max-height:65%;" class="btn btn-primary">Combattre</button>
+                  <button style="max-height:65%;" class="btn btn-primary ml-3">Terminer</button>
+                  <button style="max-height:65%;" class="btn btn-primary btn-sm ml-3"><pre class="text-white"> Terminer la mission et
 réparer le vaisseau</pre></button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="card w-100">
-        <div class="card-header">
-        [Nom Joueur Here]
-        </div>
-        <div class="card-body">
-          <div class="bg-light d-flex justify-content-between">
-            <div>[Experience Joueur Here]</div>
-              <div>[Credit Galactique Here]</div>
-            </div>
-            [Nom Vaisseau Here]
-            <div class="progress position-relative">
-              <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div class=float-right>
-        <div class="card w-100">
-          <div class="card-header">
-           Mission en cours
-          </div>
-          <div class="card-body">
-            [Mission Actuelle]/5
-          </div>
-        </div>
-         <div class="card w-100">
-        <div class="card-header">
-        [Nom Enemy Here]
-        </div>
-        <div class="card-body">
-          <div class="bg-light d-flex justify-content-between">
-            <div>[Experience Enemy Here]</div>
-              <div>[Credit Galactique Here]</div>
+        <div class="col">
+          <div class="card h-100">
+              <div class="card-header">
+                Mission en cours
+              </div>
+              <div class="card-body">
+                [Mission Actuelle]/5
+              </div>
             </div>
-            [Nom Vaisseau Here]
-            <div class="progress position-relative">
-              <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
+          </div>
+        </div>
+      <div class="row mt-5 px-4">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+            [Nom Joueur Here]
+            </div>
+            <div class="card-body">
+              <div class="bg-light d-flex justify-content-between">
+                <div>[Experience Joueur Here]</div>
+                <div>[Credit Galactique Here]</div>
+              </div>
+                [Nom Vaisseau Here]
+              <div class="progress position-relative">
+                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              [Nom Enemy Here]
+            </div>
+            <div class="card-body">
+              <div class="bg-light d-flex justify-content-between">
+                <div>[Experience Enemy Here]</div>
+                <div>[Credit Galactique Here]</div>
+              </div>
+                [Nom Vaisseau Here]
+              <div class="progress position-relative">
+                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                  <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
+                </div>
               </div>
             </div>
           </div>
@@ -66,5 +74,15 @@ réparer le vaisseau</pre></button>
   </template>
 
 <script>
-export default {}
+export default {
+  async beforeRouteLeave (to, from, next) {
+    const confirmed = await this.$bvModal.msgBoxConfirm(
+      'Confirmer le changement de page ? Vos données seront perdue.',
+      { cancelTitle: 'Revenir', okTitle: 'Continuer' }
+    )
+    if (confirmed === true) {
+      next()
+    }
+  }
+}
 </script>
