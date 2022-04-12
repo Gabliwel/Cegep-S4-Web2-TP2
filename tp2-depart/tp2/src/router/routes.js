@@ -6,7 +6,7 @@ import PageNotFound from '../views/PageNotFound.vue'
 export default [
   {
     path: '/',
-    name: 'Home',
+    name: 'Root',
     redirect: '/home'
   },
   {
