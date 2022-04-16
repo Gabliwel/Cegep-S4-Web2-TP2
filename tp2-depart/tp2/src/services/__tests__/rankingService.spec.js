@@ -20,4 +20,9 @@ describe('rankingService.js', () => {
     const response = await rankingService.getRanking()
     expect(response).toStrictEqual(scores)
   })
+  test("postRanking ajoute le ranking et le retourne", async () => {
+    mockAxios.onPost(`${API}/ranking`).reply(201, { name: "test", scores: 999})
+    const response = await rankingService.postRanking({ name: "test", scores: 999})
+    expect(response).toStrictEqual({ name: "test", scores: 999})
+  })
 })

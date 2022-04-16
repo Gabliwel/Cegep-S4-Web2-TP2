@@ -34,7 +34,7 @@
 <script>
 import { shipsService } from '../services/shipsService.js'
 import { ui } from '../externalization/uiTextPlugin.js'
-// v-bind:to="{ name: 'Game', params: {name: name, ship: selectedShip} }"
+
 export default {
   data () {
     return {
