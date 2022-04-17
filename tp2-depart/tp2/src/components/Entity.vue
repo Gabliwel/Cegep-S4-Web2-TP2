@@ -51,14 +51,10 @@ export default {
       } else if (this.info.experience === 3) {
         return 'Expert'
       } else if (this.info.experience === 4) {
-        return 'Maitre '
+        return 'Maitre'
       } else {
         console.log('error')
       }
-    },
-    updateBar () {
-      this.lifeBar = document.getElementById('life-bar')
-      this.lifeBar.style.width = this.health + '%'
     }
   }
 }

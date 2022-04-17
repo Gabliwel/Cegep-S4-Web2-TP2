@@ -113,35 +113,61 @@ export default {
   methods: {
     async endFigth () {
       if (this.nbFight === 5) {
-        this.gameEnded = true
-        let postMsg
-        try {
-          await rankingService.postRanking({ name: this.player.name, score: this.player.credit })
-          postMsg = 'Score bien sauvegardé!'
-        } catch (error) {
-          postMsg = 'Impossbile de sauvegarder le score!'
-        }
-        let confirmed = false
-        while (confirmed !== true) {
-          confirmed = await this.$bvModal.msgBoxOk(postMsg,
-            {
-              title: 'Victoire! (Score final: ' + this.player.credit + ')',
-              okTitle: 'Continuer',
-              noCloseOnBackdrop: true,
-              noCloseOnEsc: true
-            }
-          )
-        }
-        this.$router.push({ name: 'Scoreboard' })
+        this.winGame()
       } else {
         this.nbFight++
         await this.selectRandomEnemy()
       }
     },
     figth () {
-      this.playerHealth--
-      this.enemyHealth--
-      console.log('fight')
+      const playerAttack = (Math.random() < this.getHitChance(this.player.experience))
+      const enemyAttack = (Math.random() < this.getHitChance(this.enemy.experience))
+      if (playerAttack === true) {
+        this.enemyHealth -= Math.floor(Math.random() * 6) + 3
+      }
+      if (enemyAttack === true) {
+        this.playerHealth -= Math.floor(Math.random() * 6) + 3
+      }
+      if (this.playerHealth <= 0) {
+        this.loseGame()
+      } else if (this.enemyHealth <= 0) {
+        this.player.credit += this.enemy.credit
+        this.nbFight++
+        this.selectRandomEnemy()
+        if (this.nbFight === 5) {
+          this.winGame()
+        }
+      }
+    },
+    async loseGame () {
+      this.gameEnded = true
+      await this.makeEndingBox('Défaite... (Score final: ' + this.player.credit + ')', 'Vous avez été tué par ' + this.enemy.name)
+      this.$router.push({ name: 'Home' })
+    },
+    async winGame () {
+      this.gameEnded = true
+      let postMsg
+      try {
+        await rankingService.postRanking({ name: this.player.name, score: this.player.credit })
+        postMsg = 'Score bien sauvegardé!'
+      } catch (error) {
+        postMsg = 'Impossbile de sauvegarder le score!'
+      }
+      await this.makeEndingBox('Victoire! (Score final: ' + this.player.credit + ')', postMsg)
+      this.$router.push({ name: 'Scoreboard' })
+    },
+    async makeEndingBox (title, msg) {
+      let confirmed = false
+      while (confirmed !== true) {
+        confirmed = await this.$bvModal.msgBoxOk(msg,
+          {
+            title: title,
+            okTitle: 'Continuer',
+            noCloseOnBackdrop: true,
+            noCloseOnEsc: true
+          }
+        )
+      }
     },
     preventNav (event) {
       event.preventDefault()
@@ -155,7 +181,20 @@ export default {
         this.enemy = enemy[0]
         this.enemyHealth = 100
       } catch (error) {
-        console.log('error')
+        this.gameEnded = true
+        await this.makeEndingBox('Erreur serveur', "Impossible de trouvez des ennemies, redirection vers l'accueil")
+        this.$router.push({ name: 'Home' })
+      }
+    },
+    getHitChance (exp) {
+      if (exp === 1) {
+        return 0.2
+      } else if (exp === 2) {
+        return 0.35
+      } else if (exp === 3) {
+        return 0.5
+      } else if (exp === 4) {
+        return 0.7
       }
     }
   }
