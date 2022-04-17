@@ -52,8 +52,6 @@ export default {
         return 'Expert'
       } else if (this.info.experience === 4) {
         return 'Maitre'
-      } else {
-        console.log('error')
       }
     }
   }
