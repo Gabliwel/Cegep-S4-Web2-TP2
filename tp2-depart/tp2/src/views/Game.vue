@@ -32,42 +32,10 @@ réparer le vaisseau</pre></button>
         </div>
       <div class="row mt-5 px-4">
         <div class="col">
-          <div class="card">
-            <div class="card-header">
-            Nom: {{name}}
-            </div>
-            <div class="card-body">
-              <div class="bg-light d-flex justify-content-between">
-                <div>[Experience Joueur Here]</div>
-                <div>Credit Galactique: {{ score }}</div>
-              </div>
-                Vaisseau: {{ship}}
-              <div class="progress position-relative">
-                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                  <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Entity v-bind:info="this.player" v-bind:health="this.playerHealth" />
         </div>
         <div class="col">
-          <div class="card">
-            <div class="card-header">
-              Nom Enemy: {{ enemyName }}
-            </div>
-            <div class="card-body">
-              <div class="bg-light d-flex justify-content-between">
-                <div>Experience Enemy: {{ enemyExp }}</div>
-                <div>Credit Galactique: {{ enemyCredit }}</div>
-              </div>
-                Nom Vaisseau: {{ enemyShip }}
-              <div class="progress position-relative">
-                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                  <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Entity v-bind:info="this.enemy" v-bind:health="this.enemyHealth" />
         </div>
       </div>
     </div>
@@ -76,14 +44,23 @@ réparer le vaisseau</pre></button>
 <script>
 import { rankingService } from '../services/rankingService.js'
 import { charactersService } from '../services/charactersService.js'
+import Entity from '../components/Entity.vue'
 
 export default {
+  components: { Entity },
   mounted () {
-    this.name = this.$route.params.name
-    this.ship = this.$route.params.ship
-    if (this.name === undefined || this.ship === undefined) {
+    if (this.$route.params.name === undefined || this.$route.params.ship === undefined) {
       this.gameEnded = true
       this.$router.push({ name: 'Home' })
+    } else {
+      this.player = {
+        name: this.$route.params.name,
+        credit: 0,
+        experience: 4,
+        ship: {
+          name: this.$route.params.ship
+        }
+      }
     }
   },
   beforeMount () {
@@ -98,13 +75,24 @@ export default {
   },
   data () {
     return {
-      name: '',
-      ship: '',
-      enemyName: '',
-      enemyShip: '',
-      enemyCredit: '',
-      enemyExp: '',
-      score: 0,
+      player: {
+        name: '',
+        credit: 0,
+        experience: 4,
+        ship: {
+          name: ''
+        }
+      },
+      enemy: {
+        name: '',
+        credit: 0,
+        experience: 4,
+        ship: {
+          name: ''
+        }
+      },
+      playerHealth: 100,
+      enemyHealth: 100,
       nbFight: 1,
       gameEnded: false
     }
@@ -128,7 +116,7 @@ export default {
         this.gameEnded = true
         let postMsg
         try {
-          await rankingService.postRanking({ name: this.name, score: this.score })
+          await rankingService.postRanking({ name: this.player.name, score: this.player.credit })
           postMsg = 'Score bien sauvegardé!'
         } catch (error) {
           postMsg = 'Impossbile de sauvegarder le score!'
@@ -137,7 +125,7 @@ export default {
         while (confirmed !== true) {
           confirmed = await this.$bvModal.msgBoxOk(postMsg,
             {
-              title: 'Victoire! (Score final: ' + this.score + ')',
+              title: 'Victoire! (Score final: ' + this.player.credit + ')',
               okTitle: 'Continuer',
               noCloseOnBackdrop: true,
               noCloseOnEsc: true
@@ -151,6 +139,8 @@ export default {
       }
     },
     figth () {
+      this.playerHealth--
+      this.enemyHealth--
       console.log('fight')
     },
     preventNav (event) {
@@ -162,24 +152,9 @@ export default {
         const nbEnnemy = await charactersService.getNbCharacters()
         const rand = Math.floor(Math.random() * (nbEnnemy - 1 + 1) + 1)
         const enemy = await charactersService.getCharacter(rand)
-        this.enemyName = enemy[0].name
-        this.enemyShip = enemy[0].ship.name
-        this.enemyExp = this.getExperience(enemy[0].experience)
-        this.enemyCredit = enemy[0].credit
+        this.enemy = enemy[0]
+        this.enemyHealth = 100
       } catch (error) {
-        console.log('error')
-      }
-    },
-    getExperience (experienceValue) {
-      if (experienceValue === 1) {
-        return 'Débutant'
-      } else if (experienceValue === 2) {
-        return 'Confirmé'
-      } else if (experienceValue === 3) {
-        return 'Expert'
-      } else if (experienceValue === 4) {
-        return 'Maitre '
-      } else {
         console.log('error')
       }
     }
