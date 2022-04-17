@@ -11,7 +11,13 @@ async function getCharacter (id) {
   return response.data
 }
 
+async function getCharacters () {
+  const response = await axios.get(`${API}/characters`)
+  return response.data
+}
+
 export const charactersService = {
   getNbCharacters,
+  getCharacters,
   getCharacter
 }

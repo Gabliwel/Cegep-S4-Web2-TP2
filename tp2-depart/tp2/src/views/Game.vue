@@ -32,65 +32,30 @@ réparer le vaisseau</pre></button>
         </div>
       <div class="row mt-5 px-4">
         <div class="col">
-          <div class="card">
-            <div class="card-header">
-            Nom: {{name}}
-            </div>
-            <div class="card-body">
-              <div class="bg-light d-flex justify-content-between">
-                <div>[Experience Joueur Here]</div>
-                <div>[Credit Galactique Here]</div>
-              </div>
-                Vaisseau: {{ship}}
-              <div class="progress position-relative">
-                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                  <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Joueur :name="this.$route.params.name" :ship="this.$route.params.ship"></Joueur>
         </div>
         <div class="col">
-          <div class="card">
-            <div class="card-header">
-              [Nom Enemy Here]
-            </div>
-            <div class="card-body">
-              <div class="bg-light d-flex justify-content-between">
-                <div>[Experience Enemy Here]</div>
-                <div>[Credit Galactique Here]</div>
-              </div>
-                [Nom Vaisseau Here]
-              <div class="progress position-relative">
-                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
-                  <small class="justify-content-center d-flex position-absolute text-dark w-100">50%</small>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Enemy> </Enemy>
         </div>
       </div>
     </div>
-  </template>
+</template>
 
 <script>
+import Joueur from '../components/Joueur.vue'
+import Enemy from '../components/Enemy.vue'
 export default {
-  mounted () {
-    this.name = this.$route.params.name
-    this.ship = this.$route.params.ship
-  },
-  data () {
-    return {
-      name: '',
-      ship: ''
-    }
-  },
+  components: { Joueur, Enemy },
   async beforeRouteLeave (to, from, next) {
-    const confirmed = await this.$bvModal.msgBoxConfirm(
-      'Confirmer le changement de page ? Vos données seront perdue.',
-      { cancelTitle: 'Revenir', okTitle: 'Continuer' }
-    )
-    if (confirmed === true) {
+    if (this.avoidRouteLeave === false) {
+      const confirmed = await this.$bvModal.msgBoxConfirm(
+        'Confirmer le changement de page ? Vos données seront perdue.',
+        { cancelTitle: 'Revenir', okTitle: 'Continuer' }
+      )
+      if (confirmed === true) {
+        next()
+      }
+    } else {
       next()
     }
   }
