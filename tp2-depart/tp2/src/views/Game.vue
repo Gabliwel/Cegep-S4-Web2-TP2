@@ -12,7 +12,7 @@
                 <div class="col text-center">
                   <button style="max-height:65%;" class="btn btn-primary" @click="figth()">Combattre</button>
                   <button style="max-height:65%;" class="btn btn-primary ml-3" @click="endFigth()">Terminer</button>
-                  <button style="max-height:65%;" class="btn btn-primary btn-sm ml-3"><pre class="text-white"> Terminer la mission et
+                  <button style="max-height:65%;" class="btn btn-primary btn-sm ml-3" @click="repairShip()"><pre class="text-white"> Terminer la mission et
 réparer le vaisseau</pre></button>
                 </div>
               </div>
@@ -133,9 +133,28 @@ export default {
       } else if (this.enemyHealth <= 0) {
         this.player.credit += this.enemy.credit
         this.nbFight++
-        this.selectRandomEnemy()
         if (this.nbFight === 5) {
           this.winGame()
+        } else {
+          this.selectRandomEnemy()
+        }
+      }
+    },
+    async repairShip () {
+      if (this.playerHealth === 100) {
+        this.makeToast('La vie de votre vaisseau est déjà au max', 'Action Impossbile')
+      } else if (this.player.credit < 5) {
+        this.makeToast('Il faut au moins 5 crédit pour réaliser cette action', 'Action Impossbile')
+      } else {
+        while (this.playerHealth < 100 && this.player.credit - 5 >= 0) {
+          this.player.credit -= 5
+          this.playerHealth += 1
+        }
+        this.nbFight++
+        if (this.nbFight === 5) {
+          this.winGame()
+        } else {
+          this.selectRandomEnemy()
         }
       }
     },
@@ -196,6 +215,14 @@ export default {
       } else if (exp === 4) {
         return 0.7
       }
+    },
+    makeToast (msg, title) {
+      this.$bvToast.toast(msg, {
+        title: title,
+        autoHideDelay: 5000,
+        appendToast: true,
+        style: 'b-toaster-bottom-right'
+      })
     }
   }
 }
