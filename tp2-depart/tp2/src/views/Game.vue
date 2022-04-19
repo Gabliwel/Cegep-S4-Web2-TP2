@@ -10,8 +10,8 @@
             <div class="card-body">
               <div class="row">
                 <div class="col text-center">
-                  <button style="max-height:65%;" class="btn btn-primary" @click="figth()">Combattre</button>
-                  <button style="max-height:65%;" class="btn btn-primary ml-3" @click="endFigth()">Terminer</button>
+                  <button style="max-height:65%;" class="btn btn-primary" @click="fight()">Combattre</button>
+                  <button style="max-height:65%;" class="btn btn-primary ml-3" @click="endFight()">Terminer</button>
                   <button style="max-height:65%;" class="btn btn-primary btn-sm ml-3" @click="repairShip()"><pre class="text-white"> Terminer la mission et
 réparer le vaisseau</pre></button>
                 </div>
@@ -45,6 +45,7 @@ réparer le vaisseau</pre></button>
 import { rankingService } from '../services/rankingService.js'
 import { charactersService } from '../services/charactersService.js'
 import Entity from '../components/Entity.vue'
+import { ui } from '../externalization/uiTextPlugin.js'
 
 export default {
   components: { Entity },
@@ -100,8 +101,8 @@ export default {
   async beforeRouteLeave (to, from, next) {
     if (this.gameEnded === false) {
       const confirmed = await this.$bvModal.msgBoxConfirm(
-        'Confirmer le changement de page ? Vos données seront perdue.',
-        { cancelTitle: 'Revenir', okTitle: 'Continuer' }
+        ui.Game.LEAVING_MSG,
+        { okTitle: 'Continuer', cancelTitle: 'Annuler' }
       )
       if (confirmed === true) {
         next()
@@ -111,7 +112,7 @@ export default {
     }
   },
   methods: {
-    async endFigth () {
+    async endFight () {
       if (this.nbFight === 5) {
         this.winGame()
       } else {
@@ -119,7 +120,7 @@ export default {
         await this.selectRandomEnemy()
       }
     },
-    figth () {
+    fight () {
       const playerAttack = (Math.random() < this.getHitChance(this.player.experience))
       const enemyAttack = (Math.random() < this.getHitChance(this.enemy.experience))
       if (playerAttack === true) {
@@ -142,9 +143,9 @@ export default {
     },
     async repairShip () {
       if (this.playerHealth === 100) {
-        this.makeToast('La vie de votre vaisseau est déjà au max', 'Action Impossbile')
+        this.makeToast(ui.Game.REPAIR_SHIP_ALREADY_MAXED, ui.IMPOSSIBLE_ACTION_ERROR_TITLE)
       } else if (this.player.credit < 5) {
-        this.makeToast('Il faut au moins 5 crédit pour réaliser cette action', 'Action Impossbile')
+        this.makeToast(ui.Game.RAPAIR_SHIP_MISSING_CG, ui.IMPOSSIBLE_ACTION_ERROR_TITLE)
       } else {
         while (this.playerHealth < 100 && this.player.credit - 5 >= 0) {
           this.player.credit -= 5
@@ -160,7 +161,7 @@ export default {
     },
     async loseGame () {
       this.gameEnded = true
-      await this.makeEndingBox('Défaite... (Score final: ' + this.player.credit + ')', 'Vous avez été tué par ' + this.enemy.name)
+      await this.makeEndingBox(ui.Game.GAME_OVER_TITLE(this.player.credit), ui.Game.GAME_OVER_CONTENT(this.enemy.name))
       this.$router.push({ name: 'Home' })
     },
     async winGame () {
@@ -168,11 +169,11 @@ export default {
       let postMsg
       try {
         await rankingService.postRanking({ name: this.player.name, score: this.player.credit })
-        postMsg = 'Score bien sauvegardé!'
+        postMsg = ui.Game.SCORE_SAVED
       } catch (error) {
-        postMsg = 'Impossbile de sauvegarder le score!'
+        postMsg = ui.Game.SCORE_NOT_SAVED
       }
-      await this.makeEndingBox('Victoire! (Score final: ' + this.player.credit + ')', postMsg)
+      await this.makeEndingBox(ui.Game.WINNING_TITLE(this.player.credit), postMsg)
       this.$router.push({ name: 'Scoreboard' })
     },
     async makeEndingBox (title, msg) {
@@ -181,7 +182,7 @@ export default {
         confirmed = await this.$bvModal.msgBoxOk(msg,
           {
             title: title,
-            okTitle: 'Continuer',
+            okTitle: ui.CONTINUE,
             noCloseOnBackdrop: true,
             noCloseOnEsc: true
           }
@@ -201,19 +202,19 @@ export default {
         this.enemyHealth = 100
       } catch (error) {
         this.gameEnded = true
-        await this.makeEndingBox('Erreur serveur', "Impossible de trouvez des ennemies, redirection vers l'accueil")
+        await this.makeEndingBox(ui.SERVER_ERROR_TITLE, ui.Game.CANT_FIND_ENEMY)
         this.$router.push({ name: 'Home' })
       }
     },
     getHitChance (exp) {
       if (exp === 1) {
-        return 0.2
+        return ui.Entity.HIT_CHANCE1
       } else if (exp === 2) {
-        return 0.35
+        return ui.Entity.HIT_CHANCE2
       } else if (exp === 3) {
-        return 0.5
+        return ui.Entity.HIT_CHANCE3
       } else if (exp === 4) {
-        return 0.7
+        return ui.Entity.HIT_CHANCE4
       }
     },
     makeToast (msg, title) {

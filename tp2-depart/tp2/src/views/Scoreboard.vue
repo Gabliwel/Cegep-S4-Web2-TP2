@@ -1,11 +1,11 @@
 <template>
   <div class="content-container">
-    <h1>ScoreBoard</h1>
+    <h1>Scores</h1>
     <table class="table table-striped table-dark col-md-6 offset-md-3">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Player name</th>
+          <th scope="col">Nom du joueur</th>
           <th scope="col">Score</th>
         </tr>
       </thead>

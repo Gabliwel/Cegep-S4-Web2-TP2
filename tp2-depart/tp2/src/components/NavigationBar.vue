@@ -5,8 +5,8 @@
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse">
-        <router-link class="nav-link active" v-bind:to="{ name: 'Home' }">Home</router-link>
-        <router-link class="nav-link active" v-bind:to="{ name: 'Scoreboard' }">Scoreboard</router-link>
+        <router-link class="nav-link active" v-bind:to="{ name: 'Home' }">Accueil</router-link>
+        <router-link class="nav-link active" v-bind:to="{ name: 'Scoreboard' }">Scores</router-link>
     </div>
   </nav>
 </template>

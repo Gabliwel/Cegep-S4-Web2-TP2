@@ -1,16 +1,17 @@
 <template>
   <div class="card">
     <div class="card-header">
-      {{ this.info.name }}
+      <p id="name">{{ this.info.name }}</p>
     </div>
     <div class="card-body">
       <div class="bg-light d-flex justify-content-between">
-        <div>Expérience: {{ this.getExperience() }}</div>
-        <div>Crédit: {{ this.info.credit }}</div>
+        <p id="xp">Expérience: {{ this.getExperience() }}</p>
+        <p id="cg">Crédit: {{ this.info.credit }}</p>
       </div>
-      Vaisseau: {{ this.info.ship.name }}
+    <p id="ship">Vaisseau: {{ this.info.ship.name }}</p>
       <div class="progress" style="height: 50px;">
         <div
+          id="hp"
           class="progress-bar"
           role="progressbar"
           v-bind:style="{ width: health + '%'}"
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+import { ui } from '../externalization/uiTextPlugin.js'
 export default {
   props: {
     info: {
@@ -45,13 +47,13 @@ export default {
   methods: {
     getExperience () {
       if (this.info.experience === 1) {
-        return 'Débutant'
+        return ui.Entity.NAME1
       } else if (this.info.experience === 2) {
-        return 'Confirmé'
+        return ui.Entity.NAME2
       } else if (this.info.experience === 3) {
-        return 'Expert'
+        return ui.Entity.NAME3
       } else if (this.info.experience === 4) {
-        return 'Maitre'
+        return ui.Entity.NAME4
       }
     }
   }

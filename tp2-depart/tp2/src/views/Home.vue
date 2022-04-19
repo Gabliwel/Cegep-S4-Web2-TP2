@@ -4,7 +4,7 @@
     <div class="col d-flex justify-content-center">
       <div class="card w-75">
         <div class="card-header bg-dark text-light">
-          Choose your character
+          Créez votre personnage
         </div>
         <div class="card-body" v-if="isLoaded === false">
           <img src="@/assets/loadingWaiting.gif" alt="Chargement..." width="20"/>
@@ -14,11 +14,11 @@
             <div class="input-group-prepend">
               <span class="input-group-text">@</span>
             </div>
-            <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" v-model="name" v-bind:disabled="hasError">
+            <input type="text" class="form-control" placeholder="Nom de votre personnage" aria-label="Username" aria-describedby="basic-addon1" v-model="name" v-bind:disabled="hasError">
           </div>
           <div class="input-group mb-3">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="inputGroupSelect01">Ship</label>
+              <label class="input-group-text" for="inputGroupSelect01">Vaisseau</label>
             </div>
             <select class="custom-select" v-bind:disabled="hasError" v-model="selectedShip">
               <option v-for="ship in ships" v-bind:key="ship.id">{{ ship.name }}</option>
