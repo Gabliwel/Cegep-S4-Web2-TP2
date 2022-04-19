@@ -39,7 +39,7 @@ réparer le vaisseau</pre></button>
         </div>
       </div>
     </div>
-  </template>
+</template>
 
 <script>
 import { rankingService } from '../services/rankingService.js'
