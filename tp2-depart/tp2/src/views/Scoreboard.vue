@@ -10,8 +10,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="score in scores" v-bind:key="score.id">
-          <th scope="row">{{score.id}}</th>
+        <tr v-for="(score, index) in scores" v-bind:key="score.id">
+          <th scope="row">{{ index + 1 }}</th>
           <td>{{score.name}}</td>
           <td>{{score.score}}</td>
         </tr>
@@ -33,6 +33,9 @@ export default {
   async created () {
     try {
       this.scores = await rankingService.getRanking()
+      this.scores.sort(function (a, b) {
+        return b.score - a.score
+      })
     } catch (error) {
       this.makeToast(ui.Scoreboard.SERVER_ERROR, ui.SERVER_ERROR_TITLE)
     }
