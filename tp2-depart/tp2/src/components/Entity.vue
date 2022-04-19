@@ -18,7 +18,7 @@
           aria-valuemin="0"
           aria-valuemax="100"
         >{{ this.health }}%</div>
-  </div>
+      </div>
     </div>
   </div>
 </template>

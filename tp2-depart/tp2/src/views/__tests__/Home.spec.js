@@ -53,4 +53,50 @@ describe('Home.vue', () => {
     await flushPromises()
     expect(makeToast).toHaveBeenCalled()
   })
+  test('Si le champ nom est vide, affiche une notification lors du changement de page.', async () => {
+    shipsService.getShips.mockResolvedValue(ships)
+    const makeToast = jest.fn()
+    const mock = {$bvToast: {
+      toast: () => makeToast()
+    }}
+    const wrapper = shallowMount(Home, {
+      mocks: mock
+    })
+    await flushPromises()
+    const options = wrapper.find('select').findAll('option')
+    await options.at(1).setSelected()
+    await wrapper.find('button').trigger('click')
+    expect(makeToast).toHaveBeenCalled()
+  })
+  test("Si le vaisseau n'est pas choisi, affiche une notification lors du changement de page.", async () => {
+    shipsService.getShips.mockResolvedValue(ships)
+    const makeToast = jest.fn()
+    const mock = {$bvToast: {
+      toast: () => makeToast()
+    }}
+    const wrapper = shallowMount(Home, {
+      mocks: mock
+    })
+    await flushPromises()
+    wrapper.find('input').setValue('Bob')
+    await wrapper.find('button').trigger('click')
+    expect(makeToast).toHaveBeenCalled()
+  })
+  test('Si le vaisseau et le nom est choisi, redirige vers la page Game avec les informations', async () => {
+    shipsService.getShips.mockResolvedValue(ships)
+    const pushToGame = jest.fn()
+    const mock = {$router: {
+      push: param => pushToGame(param)
+    }}
+    const wrapper = shallowMount(Home, {
+      mocks: mock
+    })
+    await flushPromises()
+    wrapper.find('input').setValue('Bob')
+    const options = wrapper.find('select').findAll('option')
+    await options.at(1).setSelected()
+    const selected = options.at(1).element.value
+    await wrapper.find('button').trigger('click')
+    expect(pushToGame).toBeCalledWith({ name: 'Game', params: { name: 'Bob', ship: selected } })
+  })
 })
