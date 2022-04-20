@@ -10,9 +10,9 @@
             <div class="card-body">
               <div class="row">
                 <div class="col text-center">
-                  <button style="max-height:65%;" class="btn btn-primary" @click="fight()">Combattre</button>
-                  <button style="max-height:65%;" class="btn btn-primary ml-3" @click="endFight()">Terminer</button>
-                  <button style="max-height:65%;" class="btn btn-primary btn-sm ml-3" @click="repairShip()"><pre class="text-white"> Terminer la mission et
+                  <button id="fight" style="max-height:65%;" class="btn btn-primary" @click="fight()">Combattre</button>
+                  <button id="end" style="max-height:65%;" class="btn btn-primary ml-3" @click="endFight()">Terminer</button>
+                  <button id="repair" style="max-height:65%;" class="btn btn-primary btn-sm ml-3" @click="repairShip()"><pre class="text-white"> Terminer la mission et
 réparer le vaisseau</pre></button>
                 </div>
               </div>
@@ -25,7 +25,7 @@ réparer le vaisseau</pre></button>
                 Mission en cours
               </div>
               <div class="card-body">
-                {{ nbFight }}/5
+                <h2 id="nbFight">{{ nbFight }}/5</h2>
               </div>
             </div>
           </div>
@@ -50,6 +50,8 @@ import { ui } from '../externalization/uiTextPlugin.js'
 export default {
   components: { Entity },
   mounted () {
+    // if pour si on arrive sur game sans passer par home
+    // donc, aussi pour les refresh sur home
     if (this.$route.params.name === undefined || this.$route.params.ship === undefined) {
       this.gameEnded = true
       this.$router.push({ name: 'Home' })
@@ -99,6 +101,7 @@ export default {
     }
   },
   async beforeRouteLeave (to, from, next) {
+    // if pour si on arrive sur game sans passer par home
     if (this.gameEnded === false) {
       const confirmed = await this.$bvModal.msgBoxConfirm(
         ui.Game.LEAVING_MSG,
@@ -189,6 +192,7 @@ export default {
         )
       }
     },
+    // mets un alerte sur action de refresh
     preventNav (event) {
       event.preventDefault()
       event.returnValue = ''
