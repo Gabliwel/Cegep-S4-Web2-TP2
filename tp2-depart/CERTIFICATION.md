@@ -4,8 +4,8 @@
 
 Nous, les membres de l’équipe, certifions que :
 
-- Samuel Desbiens a contribué au travail pratique dans une proportion de 50%.
-- Gabriel Bertrand a contribué au travail pratique dans une proportion de 50%.
+- Samuel Desbiens a contribué au travail pratique dans une proportion de 40%.
+- Gabriel Bertrand a contribué au travail pratique dans une proportion de 60%.
 
 ## Bonus développé
 

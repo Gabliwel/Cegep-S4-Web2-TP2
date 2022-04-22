@@ -17,7 +17,7 @@ export const ui = {
   Game: {
     LEAVING_MSG: 'Confirmer le changement de page ? Vos données seront perdue.',
     REPAIR_SHIP_ALREADY_MAXED: 'La vie de votre vaisseau est déjà au max',
-    RAPAIR_SHIP_MISSING_CG: 'Il faut au moins 5 crédit pour réaliser cette action',
+    REPAIR_SHIP_MISSING_CG: 'Il faut au moins 5 crédit pour réaliser cette action',
     SCORE_SAVED: 'Score bien sauvegardé!',
     SCORE_NOT_SAVED: 'Impossbile de sauvegarder le score!',
     CANT_FIND_ENEMY: "Impossible de trouvez des ennemies, redirection vers l'accueil",
@@ -36,6 +36,7 @@ export const ui = {
     NAME2: 'Confirmé',
     NAME3: 'Expert',
     NAME4: 'Maitre',
+    HIT_CHANCE_ERROR: 0.0,
     HIT_CHANCE1: 0.2,
     HIT_CHANCE2: 0.35,
     HIT_CHANCE3: 0.5,

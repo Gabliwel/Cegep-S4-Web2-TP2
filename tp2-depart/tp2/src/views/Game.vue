@@ -116,7 +116,7 @@ export default {
   },
   methods: {
     async endFight () {
-      if (this.nbFight === 5) {
+      if (this.nbFight >= 5) {
         this.winGame()
       } else {
         this.nbFight++
@@ -136,30 +136,20 @@ export default {
         this.loseGame()
       } else if (this.enemyHealth <= 0) {
         this.player.credit += this.enemy.credit
-        this.nbFight++
-        if (this.nbFight === 5) {
-          this.winGame()
-        } else {
-          this.selectRandomEnemy()
-        }
+        this.endFight()
       }
     },
     async repairShip () {
-      if (this.playerHealth === 100) {
+      if (this.playerHealth >= 100) {
         this.makeToast(ui.Game.REPAIR_SHIP_ALREADY_MAXED, ui.IMPOSSIBLE_ACTION_ERROR_TITLE)
       } else if (this.player.credit < 5) {
-        this.makeToast(ui.Game.RAPAIR_SHIP_MISSING_CG, ui.IMPOSSIBLE_ACTION_ERROR_TITLE)
+        this.makeToast(ui.Game.REPAIR_SHIP_MISSING_CG, ui.IMPOSSIBLE_ACTION_ERROR_TITLE)
       } else {
         while (this.playerHealth < 100 && this.player.credit - 5 >= 0) {
           this.player.credit -= 5
           this.playerHealth += 1
         }
-        this.nbFight++
-        if (this.nbFight === 5) {
-          this.winGame()
-        } else {
-          this.selectRandomEnemy()
-        }
+        this.endFight()
       }
     },
     async loseGame () {
@@ -219,6 +209,8 @@ export default {
         return ui.Entity.HIT_CHANCE3
       } else if (exp === 4) {
         return ui.Entity.HIT_CHANCE4
+      } else {
+        return ui.ENTITY.HIT_CHANCE_ERROR
       }
     },
     makeToast (msg, title) {
